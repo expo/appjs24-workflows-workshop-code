@@ -36,6 +36,7 @@
           "origin": "https://artthing2.dev/"
         }
       ],
+      "react-native-image-marker"
     ],
     "experiments": {
       "typedRoutes": true
