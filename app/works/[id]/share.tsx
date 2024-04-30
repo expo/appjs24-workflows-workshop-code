@@ -4,22 +4,10 @@ import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
 
-// TODO:
-// 1. Open cropper to make a square from the image: https://github.com/ivpusic/react-native-image-crop-picker?tab=readme-ov-file#crop-picture
-// 2. Apply museum advertising watermark (e.g., a hashtag or a URL or something) with react-native-image-marker
-// 3. Open share sheet to share the image with another app
-// 4. Do something with this view to indicate that sharing is done (maybe swap displayed image for the modified one with "you shared it!" message)
-
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
-
-  const { id } = useLocalSearchParams<{
-    id: string;
-  }>();
-
-  // query art API for the work
-  const workQuery = useWorkByIdQuery(id);
-  const work = workQuery.data;
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: work, isLoading } = useWorkByIdQuery(id);
 
   return (
     <View className="flex-1 bg-shade-1">
@@ -45,16 +33,9 @@ export default function ShareWork() {
             contentFit="cover"
             transition={500}
           />
-          <View className="absolute bottom-4 right-4">
-            <Text className="text-xl text-white">#cma</Text>
-          </View>
         </View>
       </View>
-      <LoadingShade isLoading={workQuery.isLoading} />
+      <LoadingShade isLoading={isLoading} />
     </View>
   );
-}
-
-function stripTags(htmlish: string) {
-  return htmlish.replace(/<[^>]*>?/gm, "");
 }
