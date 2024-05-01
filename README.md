@@ -1,42 +1,49 @@
-# Art Thing 2
-A demo of Expo Router v3 with API Routes using the Cleveland Museum of Art Open Access API
+# App.js 2024: "Accelerating Development and Distribution Workflows with Expo" starter project
+Starting code and solutions for the workshop.
 
-App concept: you download this thing before visiting the museum to preview the art you'll see there and "fav" the works you would like to scope out when you visit.
-## Stuff it does
-- Lists departments inside the museum
-- List all the works on display at the museum / where the API returns a photo for each department.
-- Reads and writes "favorite" works.
-- Shows all your favorited works on the "Favorites" tab.
-- Shows directions and hours for the museum. If you visit the museum, let me know and I'll try to join you!
-## Stuff inside
-- The works of art themselves are pulled from the [Cleveland Museum of Art Open Access API](https://openaccess-api.clevelandart.org/), retrieved using TanStack query. You could use the API directly, but for reliability's sake, it's pulling from local files
-- The favorites functionality is done with Expo Router API routes. Look for the +api files, one to get/ set claps for individual works, and another to read them all back for the Favorites tab. It's all going to a local data store (really just a text file) to keep things simple and self-contained.
-- Styling via Nativewind v4
-## How to run
-1. Run `npm install`
-2. Run `npx expo start`
+## Prerequisites
+- A local development environment ready for native iOS and Android React Native / Expo development.
+  - In general, the [Expo Local App Development requirements](https://docs.expo.dev/guides/local-app-development/) are a good guide to get you to the point where you can run `npx expo run:ios` and `npx expo run:android`.
+  - More specific recommendations:
+    - Xcode (recommended: 15.3 or newer)
+    - iPhone simulator (recommended: iPhone 15 Pro, iOS 17.4)
+    - Android Studio (recommended: Hedgedog 2023.1.1 or newer)
+    - Android NDK 25.1.8937393 (can be installed via Android SDK Manager > SDK Tools)
+    - virtual device with API 34 (recommended: Pixel 6 API 34)
+- Node 18.
+- Visual Studio Code
+- Git (Github Desktop works great)
+- Mac is highly recommended for the full experience (though all exercises have an Android-only track, so it's possible to do most of the exercises without a Mac).
 
-## Other fun stuff
-### Local data mode
-I'm using this app as a bit of a sandbox to demo other features, some of which require making a standalone build, and I don't really want to deploy the simple above API _yet_ (it would need stuff like... user segmentation and security, y'know!). So, I wanted a 100% offline version. You can turn that by setting the environment variable `EXPO_PUBLIC_USE_LOCAL_DATA=true`.
+## Test your setup before the workshop
+Do these steps to ensure you'll be able to complete the workshop exercises.
+1. Restore dependencies with
+```
+npm install
+```
 
-See the **data/hooks** folder for how the switching works. One cool thing about Tanstack Query is that you can quite easily use anything for the backing store- it doesn't have to be a server API. So, nothing changes with the screens or the data hooks interface itself, it's all internal to the Tanstack Query calls. Even invalidating data and forcing refresh of other screens works just fine.
+2. Build and run the app on your iOS simulator:
+```
+npx expo run:ios
+```
 
-To run in local data mode, run `npm start-local`.
+3. Build and run the app on your Android emulator:
+```
+npx expo run:android
+```
 
-## Pulling the data
-The data from the artwork API is pulled locally in order to make this into a workable mostly-offline workshop demo, and work around CORS issues prior to introducing API routes (using an API route as a proxy would also work around the curiously-intermittant CORS issues with this API).
+If these steps don't work, refer to the [Expo Local Development guide](https://docs.expo.dev/guides/local-app-development/).
 
-The request I use is `https://openaccess-api.clevelandart.org/api/artworks?has_image=1&currently_on_view=1`, which gets works with online images that are currently on display at the museum.
+If you get a mysterious CSS/Tailwind error, refer to [this workaround](https://github.com/marklawlor/nativewind/issues/838#issuecomment-1980957103) and it shouldn't bother you again.
 
-I think then run `npm strip-unused-fields-from-api-data` to remove unused fields and optionally limit the artwork to a smaller number. This is done in order to make live reloading for testing more quickly. The API itself also has the ability to limit fields, but I get "Internal Server Error" when I list the `description` field specifically in the API.
+## About the demo app
+The app is a concept for a guide for an art museum, where you can virtually tour the available exhibits and "favorite" the exhibits you would like to see in person.
 
-If I was really embedding the artwork into the app, I would treat the JSON files as assets, so they wouldn't get bundled. They would load quite quickly in this case, even with zero filtering. If I was really using the API online, it wouldn't be difficult to transition to this- simply replace the offline access in the **hooks** with fetch requests.
+The works of art themselves are pulled from the [Cleveland Museum of Art Open Access API](https://openaccess-api.clevelandart.org/), retrieved using TanStack query. You could use the API directly, but for reliability's sake, it's pulling the data from local files, though the images themselves are still pulled from the museum's CDN.
 
-The same data is also provided in a Github repo (https://github.com/ClevelandMuseumArt/openaccess), so I think they're generally OK with it being used in this way.
+The demo is based off the Expo Router tabs starter (`npx create-expo-app --template tabs`), and also includes Nativewind v4 for most of the styling.
 
-## Keith's contact info
-[Bird app](https://twitter.com/llamaluvr)
-[LinkedIn](https://www.linkedin.com/in/keith-kurak/)
-[Discord](https://chat.expo.dev)
+## Talk to the presenters
+- [Keith](https://twitter.com/llamaluvr)
+- [Tomek](https://twitter.com/tchayen)
 
