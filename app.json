@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "art-thing-2",
-    "slug": "art-thing-2",
+    "name": "appjs24-workflows-workshop-code",
+    "slug": "appjs24-workflows-workshop-code",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -26,15 +26,11 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       [
-        "expo-router",
-        {
-          "origin": "https://artthing2.dev/"
-        }
+        "expo-router"
       ],
       "react-native-image-marker"
     ],
