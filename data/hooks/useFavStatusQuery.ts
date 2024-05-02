@@ -8,19 +8,11 @@ export const useFavStatusQuery = function(id: string) {
   const query = useQuery({
     queryKey: [`works:fav:${id}`],
     queryFn: async () => {
-      if (process.env.EXPO_PUBLIC_USE_LOCAL_DATA) {
-         return await fetchFromLocal(id)
-      }
-      return await fetchFromServer(id)
+      return await fetchFromLocal(id)
     },
   });
 
   return query;
-}
-
-async function fetchFromServer(id: string) {
-  const response = await fetch(`/works/${id}/fav`);
-  return await response.json();
 }
 
 async function fetchFromLocal(id: string) {

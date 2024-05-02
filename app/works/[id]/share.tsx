@@ -7,7 +7,7 @@ import { LoadingShade } from "@/components/LoadingShade";
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: work, isLoading } = useWorkByIdQuery(id);
+  const { data: work, isLoading } = useWorkByIdQuery(id!);
 
   return (
     <View className="flex-1 bg-shade-1">

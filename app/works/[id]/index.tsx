@@ -25,11 +25,11 @@ export default function DisplayWork() {
   }>();
 
   // query art API for the work
-  const workQuery = useWorkByIdQuery(id);
+  const workQuery = useWorkByIdQuery(id!);
   const work = workQuery.data;
 
   // read fav status
-  const favQuery = useFavStatusQuery(id);
+  const favQuery = useFavStatusQuery(id!);
   const isFav = favQuery.data;
 
   // update fav status
@@ -66,7 +66,7 @@ export default function DisplayWork() {
                 className="active:opacity-50"
                 disabled={favQuery.isLoading || favMutation.isPending}
                 onPress={() => {
-                  favMutation.mutate({ id, status: !isFav });
+                  favMutation.mutate({ id: id!, status: !isFav });
                 }}
               >
                 <Icon
