@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "687b7355-d2a2-4f4d-84b2-9fd871429151"
+      }
+    },
+    "owner": "appjs24-workflows"
   }
 }
