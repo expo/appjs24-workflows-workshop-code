@@ -17,17 +17,19 @@ Starting code and solutions for the workshop.
 
 ## Test your setup before the workshop
 Do these steps to ensure you'll be able to complete the workshop exercises.
-1. Restore dependencies with
+1. Fork and clone this repo.
+
+2. Restore dependencies with
 ```
 npm install
 ```
 
-2. Build and run the app on your iOS simulator:
+3. Build and run the app on your iOS simulator:
 ```
 npx expo run:ios
 ```
 
-3. Build and run the app on your Android emulator:
+4. Build and run the app on your Android emulator:
 ```
 npx expo run:android
 ```
