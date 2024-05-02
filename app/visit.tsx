@@ -2,8 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, ScrollView, View, Text } from "react-native";
 import { Image } from "expo-image";
 import { Stack } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function VisitScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
     <View className="flex-1">
       <Stack.Screen
@@ -11,15 +14,14 @@ export default function VisitScreen() {
           title: "Visit CMA",
         }}
       />
-      <ScrollView className="bg-shade-1">
+      <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom }} className="bg-shade-1">
         <View className="row-y-2 px-4 py-2">
           <Text className="text-4xl font-semibold text-center">
             The Cleveland Museum of Art
           </Text>
-          <Text className="text-xl text-center">
-            11150 East Boulevard, Cleveland, OH, 44106
-          </Text>
-          <Text className="text-xl text-center">888-CMA-0033</Text>
+          <Text className="text-xl text-center">11150 East Boulevard</Text>
+          <Text className="text-xl text-center">Cleveland, Ohio, USA</Text>
+          <Text className="text-xl text-center">1-888-CMA-0033</Text>
         </View>
         <Text className="text-xl px-4 py-2 font-semibold bg-shade-2">
           Admission
