@@ -25,11 +25,11 @@ export default function DisplayWork() {
   }>();
 
   // query art API for the work
-  const workQuery = useWorkByIdQuery(id);
+  const workQuery = useWorkByIdQuery(id!);
   const work = workQuery.data;
 
   // read fav status
-  const favQuery = useFavStatusQuery(id);
+  const favQuery = useFavStatusQuery(id!);
   const isFav = favQuery.data;
 
   // update fav status
@@ -61,12 +61,12 @@ export default function DisplayWork() {
             <Text className="flex-1 font-semibold text-3xl px-4 py-2 bg-shade-2">
               {work?.title}
             </Text>
-            <View className="justify-center px-4 flex-row items-center gap-x-2">
+            <View className="justify-center px-4 flex-row items-center">
               <Pressable
                 className="active:opacity-50"
                 disabled={favQuery.isLoading || favMutation.isPending}
                 onPress={() => {
-                  favMutation.mutate({ id, status: !isFav });
+                  favMutation.mutate({ id: id!, status: !isFav });
                 }}
               >
                 <Icon
@@ -75,13 +75,6 @@ export default function DisplayWork() {
                   size={28}
                 />
               </Pressable>
-              <Link push href={`/works/${id}/share`}>
-                <Icon
-                  name="share-alt"
-                  color={colors.tint}
-                  size={28}
-                />
-              </Link>
             </View>
           </View>
           <View className="px-4 gap-y-2 py-2">

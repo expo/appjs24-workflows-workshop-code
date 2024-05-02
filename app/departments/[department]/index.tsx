@@ -6,9 +6,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LoadingShade } from '@/components/LoadingShade';
 
 export default function TabOneScreen() {
-  const { department }: { department: string } = useLocalSearchParams();
+  const { department } = useLocalSearchParams<{ department: string }>();
 
-  const query = useWorksForDepartmentQuery(department);
+  const query = useWorksForDepartmentQuery(department!);
 
   const insets = useSafeAreaInsets();
 
