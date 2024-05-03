@@ -41,6 +41,3 @@ expo-env.d.ts
 # @end expo-cli
 
 storage/**
-
-/ios
-/android
