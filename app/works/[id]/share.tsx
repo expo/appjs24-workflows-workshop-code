@@ -44,12 +44,6 @@ export default function ShareWork() {
     setCroppedImage(image);
   }
 
-  const path = croppedImage
-    ? Platform.OS === "android"
-      ? `file:${croppedImage}`
-      : croppedImage
-    : work && work.images.web.url;
-
   return (
     <View className="flex-1 bg-shade-1">
       <Stack.Screen
@@ -69,7 +63,11 @@ export default function ShareWork() {
           }}
         >
           <Image
-            source={{ uri: path }}
+            source={{
+              uri: croppedImage
+                ? croppedImage.path
+                : work && work.images.web.url,
+            }}
             style={{ width: "100%", height: "100%" }}
             contentFit="cover"
             transition={500}
