@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -10,28 +11,27 @@ import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
-import ImagePicker from "react-native-image-crop-picker";
+import ImagePicker, {
+  Image as ImageType,
+} from "react-native-image-crop-picker";
 import Marker, {
   ImageFormat,
   Position,
   TextBackgroundType,
 } from "react-native-image-marker";
-import { useState } from "react";
 
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: work, isLoading } = useWorkByIdQuery(id);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
 
   async function share() {
     if (!croppedImage) {
       return;
     }
 
-    await Sharing.shareAsync(
-      Platform.OS === "android" ? `file:${croppedImage}` : croppedImage
-    );
+    await Sharing.shareAsync(croppedImage.path);
   }
 
   async function crop() {
@@ -41,35 +41,7 @@ export default function ShareWork() {
       height: 300,
       mediaType: "photo",
     });
-    const markedImage = await Marker.markText({
-      backgroundImage: {
-        src: image.path,
-        scale: 1,
-      },
-      watermarkTexts: [
-        {
-          text: "#cma",
-          position: {
-            position: Position.bottomRight,
-          },
-          style: {
-            color: "#fff",
-            fontSize: 20,
-            textBackgroundStyle: {
-              type: TextBackgroundType.none,
-              color: "#000",
-              paddingX: 16,
-              paddingY: 6,
-            },
-          },
-        },
-      ],
-      quality: 100,
-      filename: image.filename,
-      saveFormat: ImageFormat.jpg,
-    });
-
-    setCroppedImage(markedImage);
+    setCroppedImage(image);
   }
 
   const path = croppedImage
