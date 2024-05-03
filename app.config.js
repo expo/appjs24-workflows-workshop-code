@@ -24,6 +24,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
+      package: "com.appjs24_workflows.appjs24_workflows_workshop_code",
     },
     web: {
       bundler: "metro",
