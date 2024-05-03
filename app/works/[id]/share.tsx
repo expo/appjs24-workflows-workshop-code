@@ -107,6 +107,7 @@ export default function ShareWork() {
       <LoadingShade isLoading={isLoading} />
       <Button onPress={crop} title="Crop" />
       <Button onPress={share} title="Share" />
+      <Text>hello update test</Text>
     </View>
   );
 }
