@@ -11,9 +11,7 @@ import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
-import ImagePicker, {
-  Image as ImageType,
-} from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-crop-picker";
 import Marker, {
   ImageFormat,
   Position,
@@ -24,14 +22,14 @@ export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: work, isLoading } = useWorkByIdQuery(id);
-  const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
 
   async function share() {
     if (!croppedImage) {
       return;
     }
 
-    await Sharing.shareAsync(croppedImage.path);
+    await Sharing.shareAsync(croppedImage);
   }
 
   async function crop() {
@@ -41,7 +39,36 @@ export default function ShareWork() {
       height: 300,
       mediaType: "photo",
     });
-    setCroppedImage(image);
+
+    const markedImage = await Marker.markText({
+      backgroundImage: {
+        src: image.path,
+        scale: 1,
+      },
+      watermarkTexts: [
+        {
+          text: "#cma",
+          position: {
+            position: Position.bottomRight,
+          },
+          style: {
+            color: "#fff",
+            fontSize: 20,
+            textBackgroundStyle: {
+              type: TextBackgroundType.none,
+              color: "#000",
+              paddingX: 16,
+              paddingY: 6,
+            },
+          },
+        },
+      ],
+      quality: 100,
+      filename: image.filename,
+      saveFormat: ImageFormat.jpg,
+    });
+
+    setCroppedImage(markedImage);
   }
 
   return (
