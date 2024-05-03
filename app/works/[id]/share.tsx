@@ -90,11 +90,7 @@ export default function ShareWork() {
           }}
         >
           <Image
-            source={{
-              uri: croppedImage
-                ? croppedImage.path
-                : work && work.images.web.url,
-            }}
+            source={{ uri: croppedImage ?? work?.images.web.url }}
             style={{ width: "100%", height: "100%" }}
             contentFit="cover"
             transition={500}
