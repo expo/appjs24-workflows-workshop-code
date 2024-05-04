@@ -10,10 +10,13 @@ Starting code and solutions for the workshop.
     - Android Studio (recommended: Hedgedog 2023.1.1 or newer)
     - Android NDK 25.1.8937393 (can be installed via Android SDK Manager > SDK Tools)
     - virtual device with API 34 (recommended: Pixel 6 API 34)
+    - Fastlane (for EAS local builds)
 - Node 18.
 - Visual Studio Code
 - Git (Github Desktop works great)
 - Mac is highly recommended for the full experience (though all exercises have an Android-only track, so it's possible to do most of the exercises without a Mac).
+- An Expo account (go to https://expo.dev to sign up)
+- A Github account
 
 ## Test your setup before the workshop
 Do these steps to ensure you'll be able to complete the workshop exercises.
