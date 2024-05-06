@@ -7,7 +7,7 @@ Starting code and solutions for the workshop.
   - Watchman
   - Cocoapods
   - JDK 17
-  - Android SDK (installed via Android Studio or the standalone SDK)
+  - Android Studio
   - iOS simulator
   - Android emulator
   - [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) - a small part of the workshop will use [EAS local builds](https://docs.expo.dev/build-reference/local-builds/), though it if you cannot get this working, it will not prevent you from doing the rest of the workshop.
