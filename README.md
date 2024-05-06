@@ -45,6 +45,8 @@ If these steps don't work, refer to the [Expo Local Development guide](https://d
 
 If you get a mysterious CSS/Tailwind error, refer to [this workaround](https://github.com/marklawlor/nativewind/issues/838#issuecomment-1980957103) and it shouldn't bother you again.
 
+**Want to run on a device?** We will be focusing on emulator/simulator usage during the workshop, as it's especially easier for iOS. If you want to do some or all of the workshop on a device, you can also test with `npx expo run:ios --device` and/or `npx expo run:android --device`. Some later sections of the workshop may not work on an iOS device without additional configuration.
+
 ## About the demo app
 The app is a concept for a guide for an art museum, where you can virtually tour the available exhibits and "favorite" the exhibits you would like to see in person.
 
