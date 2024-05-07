@@ -14,6 +14,7 @@ import * as Sharing from "expo-sharing";
 import ImagePicker, {
   Image as ImageType,
 } from "react-native-image-crop-picker";
+import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
 
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
@@ -22,6 +23,8 @@ export default function ShareWork() {
   const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
 
   async function share() {
+    await saveLatestShare(editedImagePath);
+    await updateWidget();
     await Sharing.shareAsync(croppedImage?.path!);
   }
 
