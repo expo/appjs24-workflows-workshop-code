@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { View, FlatList, ScrollView } from "react-native";
 import { cssInterop, remapProps } from "nativewind";
 import "../global.css";
+import "react-native-reanimated";
 
 // component interops for nativewind - just need these once
 cssInterop(Image, { className: "style" });
