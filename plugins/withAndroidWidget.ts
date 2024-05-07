@@ -125,5 +125,3 @@ function withAndroidManifestReceiver(config: ExpoConfig, widgetName: string) {
     return androidManifestConfig;
   });
 }
-
-export default withAndroidWidget;

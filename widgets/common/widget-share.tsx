@@ -1,4 +1,6 @@
 import * as RNFS from "@dr.pogodin/react-native-fs";
+import { requestWidgetUpdate } from "react-native-android-widget";
+import { HelloAppWidget } from "@/widgets/android/HelloAppWidget";
 
 function getLatestShareFilePath() {
   return `${RNFS.DocumentDirectoryPath}/latest_share.jpg`;
@@ -17,6 +19,15 @@ export async function readLatestShareAsBase64() {
   return "data:image/jpg;base64," + imageBase64;
 }
 
-async function updateWidget() {
-  // TODO
+export async function updateWidget() {
+  const latestShareBase64 = await readLatestShareAsBase64();
+  requestWidgetUpdate({
+    widgetName: "HelloAppWidget",
+    renderWidget: (props) => (
+      <HelloAppWidget imageBase64={latestShareBase64} widgetInfo={props} />
+    ),
+    widgetNotFound: () => {
+      // Called if no widget is present on the home screen
+    },
+  });
 }
