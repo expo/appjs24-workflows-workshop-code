@@ -2,7 +2,7 @@
 //  HelloWidget.swift
 //  HelloWidget
 //
-//  Created by Keith on 5/2/24.
+//  Created by Keith on 4/17/24.
 //
 
 import WidgetKit
@@ -10,46 +10,48 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        SimpleEntry(date: Date(), imageData: nil)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+        let entry = SimpleEntry(date: Date(), imageData: nil)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
+        guard let groupDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.appjs24-workflows-workshop-code") else {
+        fatalError("could not get shared app group directory.")
         }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        let fileUrl = groupDir.appendingPathComponent("latest_share.jpg")
+        do {
+            let imageData = try Data(contentsOf: fileUrl)
+            let entry = SimpleEntry(date: Date(), imageData: imageData)
+            // Some other stuff to make the widget update...
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
+        } catch {
+            let entry = SimpleEntry(date: Date(), imageData: nil)
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
+        }
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let imageData: Data?
 }
 
 struct HelloWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
-        }
+      Image(uiImage: UIImage(data: entry.imageData!)!)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 100, height:100)
+            .cornerRadius(10)
     }
 }
 
@@ -75,6 +77,5 @@ struct HelloWidget: Widget {
 #Preview(as: .systemSmall) {
     HelloWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    SimpleEntry(date: .now, imageData: nil)
 }

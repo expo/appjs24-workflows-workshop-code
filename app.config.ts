@@ -19,6 +19,11 @@ module.exports = ({ config }: { config: ExpoConfig }) => {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.expo.appjs24-workflows-workshop-code",
+      entitlements: {
+        "com.apple.security.application-groups": [
+          "group.appjs24-workflows-workshop-code",
+        ],
+      },
     },
     android: {
       adaptiveIcon: {
@@ -39,8 +44,8 @@ module.exports = ({ config }: { config: ExpoConfig }) => {
     experiments: {
       typedRoutes: true,
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    }
+    runtimeVersion: {
+      policy: "appVersion",
+    },
   };
 };

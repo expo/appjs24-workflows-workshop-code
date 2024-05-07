@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios"],
+  "ios": {
+    "modules": ["IosWidgetRefreshModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.ioswidgetrefresh.IosWidgetRefreshModule"]
+  }
+}

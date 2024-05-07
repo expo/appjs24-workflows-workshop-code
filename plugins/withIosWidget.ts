@@ -113,6 +113,11 @@ const withIosWidget: ConfigPlugin = (config) => {
             path: "Info.plist",
             sourceTree: "<group>",
           }),
+          // @ts-expect-error
+          PBXFileReference.create(project, {
+            path: "widget.entitlements",
+            sourceTree: "<group>",
+          }),
         ],
       });
 
@@ -163,6 +168,11 @@ const withIosWidget: ConfigPlugin = (config) => {
         productReference: appexBuildFile.props.fileRef /* .appex */,
         productType: "com.apple.product-type.app-extension",
       });
+
+      widgetTarget.setBuildSetting(
+        "CODE_SIGN_ENTITLEMENTS",
+        path.join(widgetFolderRelativeToIosProject, "widget.entitlements")
+      );
 
       widgetTarget.createBuildPhase(PBXSourcesBuildPhase, {
         files: [...swiftFiles],
