@@ -1,0 +1,46 @@
+import "ts-node/register";
+import { ExpoConfig } from "expo/config";
+
+module.exports = ({ config }: { config: ExpoConfig }) => {
+  return {
+    name: "Art Museum",
+    slug: "appjs24-workflows-workshop-code",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "myapp",
+    userInterfaceStyle: "automatic",
+    splash: {
+      image: "./assets/images/splash.png",
+      resizeMode: "contain",
+      backgroundColor: "#ffffff",
+    },
+    assetBundlePatterns: ["**/*"],
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code",
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/adaptive-icon.png",
+        backgroundColor: "#ffffff",
+      },
+      package: "com.expo.appjs24workflowsworkshopcode",
+    },
+    web: {
+      bundler: "metro",
+      favicon: "./assets/images/favicon.png",
+    },
+    plugins: [
+      ["expo-router"],
+      "react-native-image-marker",
+      ["./plugins/withWidget.ts"],
+    ],
+    experiments: {
+      typedRoutes: true,
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  };
+};
