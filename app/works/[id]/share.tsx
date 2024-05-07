@@ -11,21 +11,19 @@ import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
-import ImagePicker, {
-  Image as ImageType,
-} from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-crop-picker";
 import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
 
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: work, isLoading } = useWorkByIdQuery(id!);
-  const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
+  const [editedImagePath, setEditedImagePath] = useState<string | undefined>(undefined);
 
   async function share() {
-    await saveLatestShare(editedImagePath);
+    await saveLatestShare(editedImagePath!);
     await updateWidget();
-    await Sharing.shareAsync(croppedImage?.path!);
+    await Sharing.shareAsync(editedImagePath!);
   }
 
   async function crop() {
@@ -35,7 +33,7 @@ export default function ShareWork() {
       height: 300,
       mediaType: "photo",
     });
-    setCroppedImage(image);
+    setEditedImagePath(image.path);
   }
 
   return (
@@ -57,18 +55,14 @@ export default function ShareWork() {
           }}
         >
           <Image
-            source={{
-              uri: croppedImage
-                ? croppedImage.path
-                : work && work.images.web.url,
-            }}
+            source={{ uri: editedImagePath ? editedImagePath : (work && work.images.web.url) }}
             style={{ width: "100%", height: "100%" }}
             contentFit="cover"
             transition={500}
           />
         </View>
         <RoundButton onPress={crop} title="Crop" />
-        <RoundButton title="Share" onPress={share} disabled={!croppedImage} />
+        <RoundButton title="Share" onPress={share} disabled={!editedImagePath} />
       </View>
       <LoadingShade isLoading={isLoading} />
     </View>
