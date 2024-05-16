@@ -23,7 +23,7 @@ import Marker, {
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: work, isLoading } = useWorkByIdQuery(id);
+  const { data: work, isLoading } = useWorkByIdQuery(id!);
   const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
 
   async function share() {
