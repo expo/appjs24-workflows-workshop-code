@@ -32,7 +32,8 @@
       [
         "expo-router"
       ],
-      "react-native-image-marker"
+      "react-native-image-marker",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
