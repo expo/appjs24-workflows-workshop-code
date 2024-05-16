@@ -1,7 +1,9 @@
 # App.js 2024: "Accelerating Development and Distribution Workflows with Expo" starter project
+
 Starting code and solutions for the workshop.
 
 ## Prerequisites
+
 - A local development environment ready for native iOS and Android React Native / Expo development, capable of running the `npx expo run:ios` and `npx expo run:android`, including recent versions of:
   - Xcode (version 15+)
   - Watchman
@@ -23,20 +25,25 @@ Starting code and solutions for the workshop.
   - A Github account
 
 ## Test your setup before the workshop
+
 Do these steps to ensure you'll be able to complete the workshop exercises.
+
 1. Fork and clone this repo.
 
 2. Restore dependencies with
+
 ```
 npm install
 ```
 
 3. Build and run the app on your iOS simulator:
+
 ```
 npx expo run:ios
 ```
 
 4. Build and run the app on your Android emulator:
+
 ```
 npx expo run:android
 ```
@@ -48,6 +55,7 @@ If you get a mysterious CSS/Tailwind error, refer to [this workaround](https://g
 **Want to run on a device?** We will be focusing on emulator/simulator usage during the workshop, as it's especially easier for iOS. If you want to do some or all of the workshop on a device, you can also test with `npx expo run:ios --device` and/or `npx expo run:android --device`. Some later sections of the workshop may not work on an iOS device without additional configuration.
 
 ## About the demo app
+
 The app is a concept for a guide for an art museum, where you can virtually tour the available exhibits and "favorite" the exhibits you would like to see in person.
 
 The works of art themselves are pulled from the [Cleveland Museum of Art Open Access API](https://openaccess-api.clevelandart.org/), retrieved using TanStack query. You could use the API directly, but for reliability's sake, it's pulling the data from local files, though the images themselves are still pulled from the museum's CDN.
@@ -55,6 +63,6 @@ The works of art themselves are pulled from the [Cleveland Museum of Art Open Ac
 The demo is based off the Expo Router tabs starter (`npx create-expo-app --template tabs`), and also includes Nativewind v4 for most of the styling.
 
 ## Talk to the presenters
+
 - [Keith](https://twitter.com/llamaluvr)
 - [Tomek](https://twitter.com/tchayen)
-
