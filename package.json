@@ -25,7 +25,7 @@
     "expo-application": "~5.9.1",
     "expo-dev-client": "~4.0.14",
     "expo-font": "~12.0.4",
-    "expo-image": "~1.12.8",
+    "expo-image": "~1.12.9",
     "expo-linking": "~6.3.1",
     "expo-quick-actions": "^2.0.0",
     "expo-router": "~3.5.14",
