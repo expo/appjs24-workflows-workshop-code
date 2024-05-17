@@ -30,7 +30,11 @@ export default {
       bundler: "metro",
       favicon: "./assets/images/favicon.png",
     },
-    plugins: [["expo-router"], "react-native-image-marker"],
+    plugins: [
+      ["expo-router"],
+      "react-native-image-marker",
+      "expo-quick-actions",
+    ],
     experiments: {
       typedRoutes: true,
     },

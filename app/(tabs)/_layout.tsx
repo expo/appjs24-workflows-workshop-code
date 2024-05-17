@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import * as QuickActions from "expo-quick-actions";
+import { useQuickActionRouting, RouterAction } from "expo-quick-actions/router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Pressable, Platform } from "react-native";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import customColors from "@/constants/colors";
 
@@ -21,6 +23,20 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  useQuickActionRouting();
+
+  useEffect(() => {
+    QuickActions.setItems<RouterAction>([
+      {
+        title: "Visit the museum",
+        subtitle: "Plan your next trip",
+        icon: Platform.OS === "android" ? undefined : "location",
+        id: "0",
+        params: { href: "/visit" },
+      },
+    ]);
+  }, []);
+
   return (
     <Tabs
       screenOptions={{
