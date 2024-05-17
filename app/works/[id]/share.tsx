@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { View, Text, useWindowDimensions, Button } from "react-native";
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  Button,
+  Platform,
+} from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
@@ -15,15 +21,13 @@ import Marker, {
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: work, isLoading } = useWorkByIdQuery(id);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const { data: work, isLoading } = useWorkByIdQuery(id!);
+  const [editedImagePath, setEditedImagePath] = useState<string | undefined>(
+    undefined,
+  );
 
   async function share() {
-    if (!croppedImage) {
-      return;
-    }
-
-    await Sharing.shareAsync(croppedImage);
+    await Sharing.shareAsync(editedImagePath!);
   }
 
   async function crop() {
@@ -34,7 +38,7 @@ export default function ShareWork() {
       mediaType: "photo",
     });
 
-    const markedImage = await Marker.markText({
+    const markedImagePath = await Marker.markText({
       backgroundImage: {
         src: image.path,
         scale: 1,
@@ -62,7 +66,7 @@ export default function ShareWork() {
       saveFormat: ImageFormat.jpg,
     });
 
-    setCroppedImage(markedImage);
+    setEditedImagePath(normalizeFilePath(markedImagePath));
   }
 
   return (
@@ -84,7 +88,11 @@ export default function ShareWork() {
           }}
         >
           <Image
-            source={{ uri: croppedImage ?? work?.images.web.url }}
+            source={{
+              uri: editedImagePath
+                ? editedImagePath
+                : work && work.images.web.url,
+            }}
             style={{ width: "100%", height: "100%" }}
             contentFit="cover"
             transition={500}
@@ -97,4 +105,11 @@ export default function ShareWork() {
       <Text>Hello preview 123</Text>
     </View>
   );
+}
+
+function normalizeFilePath(path: string) {
+  if (Platform.OS === "android" && !path.startsWith("file://")) {
+    return `file://${path}`;
+  }
+  return path;
 }
