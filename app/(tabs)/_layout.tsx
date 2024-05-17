@@ -34,6 +34,13 @@ export default function TabLayout() {
         id: "0",
         params: { href: "/visit" },
       },
+      {
+        title: "Favorites",
+        subtitle: "Your must-see exhibits",
+        icon: "fav_icon",
+        id: "1",
+        params: { href: "/two" },
+      },
     ]);
   }, []);
 
