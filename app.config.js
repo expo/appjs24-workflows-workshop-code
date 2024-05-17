@@ -33,7 +33,20 @@ export default {
     plugins: [
       ["expo-router"],
       "react-native-image-marker",
-      "expo-quick-actions",
+      [
+        "expo-quick-actions",
+        {
+          androidIcons: {
+            fav_icon: {
+              foregroundImage: "./assets/images/adaptive-icon-fav.png",
+              backgroundColor: "#29cfc1",
+            },
+          },
+          iosIcons: {
+            fav_icon: "./assets/images/fav.png",
+          },
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
