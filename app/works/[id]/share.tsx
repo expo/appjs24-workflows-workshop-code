@@ -15,6 +15,14 @@ import ImagePicker from "react-native-image-crop-picker";
 import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-image-marker";
 import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
 
+function normalizeFilePath(path: string) {
+  if (Platform.OS === "android") {
+    return `file://${path}`;
+  }
+  return path;
+
+}
+
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -62,7 +70,7 @@ export default function ShareWork() {
       saveFormat: ImageFormat.jpg,
     });
 
-    setEditedImagePath(markedImagePath);
+    setEditedImagePath(normalizeFilePath(markedImagePath));
   }
 
   return (
