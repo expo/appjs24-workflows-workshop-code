@@ -16,11 +16,10 @@ import Marker, { Position, TextBackgroundType, ImageFormat } from "react-native-
 import { saveLatestShare, updateWidget } from "@/widgets/common/widget-share";
 
 function normalizeFilePath(path: string) {
-  if (Platform.OS === "android") {
+  if (Platform.OS === "android" && !path.startsWith("file://")) {
     return `file://${path}`;
   }
   return path;
-
 }
 
 export default function ShareWork() {
