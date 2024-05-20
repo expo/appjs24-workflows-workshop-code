@@ -3,7 +3,7 @@ import {
   View,
   Text,
   useWindowDimensions,
-  Button,
+  Pressable,
   Platform,
 } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
@@ -13,9 +13,9 @@ import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
 import ImagePicker from "react-native-image-crop-picker";
 import Marker, {
-  ImageFormat,
   Position,
   TextBackgroundType,
+  ImageFormat,
 } from "react-native-image-marker";
 
 export default function ShareWork() {
@@ -37,7 +37,6 @@ export default function ShareWork() {
       height: 300,
       mediaType: "photo",
     });
-
     const markedImagePath = await Marker.markText({
       backgroundImage: {
         src: image.path,
@@ -76,8 +75,8 @@ export default function ShareWork() {
           title: "Share",
         }}
       />
-      <View className="py-4 px-4 bg-shade-2">
-        <Text className="text-2xl text-center py-4">
+      <View className="py-4 px-4 bg-shade-2 gap-3">
+        <Text className="text-2xl text-center">
           Share a clip of this work with your friends.
         </Text>
         <View
@@ -98,12 +97,37 @@ export default function ShareWork() {
             transition={500}
           />
         </View>
+        <RoundButton onPress={crop} title="Crop" />
+        <RoundButton
+          title="Share"
+          onPress={share}
+          disabled={!editedImagePath}
+        />
       </View>
       <LoadingShade isLoading={isLoading} />
-      <Button onPress={crop} title="Crop" />
-      <Button onPress={share} title="Share" />
-      <Text>Hello preview 123</Text>
     </View>
+  );
+}
+
+function RoundButton({
+  title,
+  onPress,
+  disabled = false,
+}: {
+  title: string;
+  onPress: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      className={`py-2 rounded-md active:opacity-50 ${
+        disabled ? "bg-gray-500" : "bg-tint"
+      }`}
+    >
+      <Text className="text-xl text-center text-white">{title}</Text>
+    </Pressable>
   );
 }
 
