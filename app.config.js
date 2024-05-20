@@ -2,7 +2,7 @@ const IS_DEV = process.env.APP_VARIANT === "development";
 
 export default {
   expo: {
-    name: IS_DEV ? "Workshop (dev)" : "Workshop",
+    name: IS_DEV ? "Art Museum (dev)" : "Art Museum",
     slug: "appjs24-workflows-workshop-code",
     version: "1.0.0",
     orientation: "portrait",
