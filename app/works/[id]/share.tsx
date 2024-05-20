@@ -3,35 +3,26 @@ import {
   View,
   Text,
   useWindowDimensions,
+  Pressable,
   Platform,
-  Button,
 } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
-import ImagePicker, {
-  Image as ImageType,
-} from "react-native-image-crop-picker";
-import Marker, {
-  ImageFormat,
-  Position,
-  TextBackgroundType,
-} from "react-native-image-marker";
+import ImagePicker from "react-native-image-crop-picker";
 
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: work, isLoading } = useWorkByIdQuery(id!);
-  const [croppedImage, setCroppedImage] = useState<ImageType | null>(null);
+  const [editedImagePath, setEditedImagePath] = useState<string | undefined>(
+    undefined,
+  );
 
   async function share() {
-    if (!croppedImage) {
-      return;
-    }
-
-    await Sharing.shareAsync(croppedImage.path);
+    await Sharing.shareAsync(editedImagePath!);
   }
 
   async function crop() {
@@ -41,7 +32,8 @@ export default function ShareWork() {
       height: 300,
       mediaType: "photo",
     });
-    setCroppedImage(image);
+
+    setEditedImagePath(normalizeFilePath(image.path));
   }
 
   return (
@@ -51,8 +43,8 @@ export default function ShareWork() {
           title: "Share",
         }}
       />
-      <View className="py-4 px-4 bg-shade-2">
-        <Text className="text-2xl text-center py-4">
+      <View className="py-4 px-4 bg-shade-2 gap-3">
+        <Text className="text-2xl text-center">
           Share a clip of this work with your friends.
         </Text>
         <View
@@ -64,8 +56,8 @@ export default function ShareWork() {
         >
           <Image
             source={{
-              uri: croppedImage
-                ? croppedImage.path
+              uri: editedImagePath
+                ? editedImagePath
                 : work && work.images.web.url,
             }}
             style={{ width: "100%", height: "100%" }}
@@ -73,10 +65,43 @@ export default function ShareWork() {
             transition={500}
           />
         </View>
+        <RoundButton onPress={crop} title="Crop" />
+        <RoundButton
+          title="Share"
+          onPress={share}
+          disabled={!editedImagePath}
+        />
       </View>
       <LoadingShade isLoading={isLoading} />
-      <Button onPress={crop} title="Crop" />
-      <Button onPress={share} title="Share" />
     </View>
   );
+}
+
+function RoundButton({
+  title,
+  onPress,
+  disabled = false,
+}: {
+  title: string;
+  onPress: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      className={`py-2 rounded-md active:opacity-50 ${
+        disabled ? "bg-gray-500" : "bg-tint"
+      }`}
+    >
+      <Text className="text-xl text-center text-white">{title}</Text>
+    </Pressable>
+  );
+}
+
+function normalizeFilePath(path: string) {
+  if (Platform.OS === "android" && !path.startsWith("file://")) {
+    return `file://${path}`;
+  }
+  return path;
 }
