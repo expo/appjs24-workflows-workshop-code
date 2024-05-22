@@ -17,14 +17,14 @@ export default {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.appjs24-workflows.appjs24-workflows-workshop-code",
+      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code" + (IS_DEV ? "-dev" : ""),
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
-      package: "com.appjs24_workflows.appjs24_workflows_workshop_code",
+      package: "com.expo.appjs24workflowsworkshopcode" + (IS_DEV ? "dev" : ""),
     },
     web: {
       bundler: "metro",
