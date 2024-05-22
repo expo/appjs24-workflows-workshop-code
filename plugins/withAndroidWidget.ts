@@ -15,6 +15,7 @@ const withAndroidWidget: ConfigPlugin = (config) => {
 
   config = withWidgetFiles(config, widgetName, widgetPath);
   config = withWidgetDescription(config);
+  config = withAndroidManifestReceiver(config, widgetName);
 
   return config;
 };
@@ -83,6 +84,45 @@ function withWidgetDescription(config: ExpoConfig) {
       stringsXml.modResults
     );
     return stringsXml;
+  });
+}
+
+function withAndroidManifestReceiver(config: ExpoConfig, widgetName: string) {
+  return withAndroidManifest(config, async (androidManifestConfig) => {
+    const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
+      androidManifestConfig.modResults
+    );
+    mainApplication.receiver = mainApplication.receiver ?? [];
+
+    mainApplication.receiver?.push({
+      $: {
+        "android:name": `.${widgetName}`,
+        "android:exported": "false",
+      } as any,
+      "intent-filter": [
+        {
+          action: [
+            {
+              $: {
+                "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
+              },
+            },
+            {
+              $: {
+                "android:name": `${androidManifestConfig.android?.package}.WIDGET_CLICK`,
+              },
+            },
+          ],
+        },
+      ],
+      "meta-data": {
+        $: {
+          "android:name": "android.appwidget.provider",
+          "android:resource": `@xml/${camelToSnakeCase(widgetName)}_info`,
+        },
+      },
+    } as any);
+    return androidManifestConfig;
   });
 }
 
