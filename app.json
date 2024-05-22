@@ -40,6 +40,18 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "575229df-4f5a-45c9-9326-e1e8810101f0"
+      }
+    },
+    "owner": "gokaytitrek",
+    "updates": {
+      "url": "https://u.expo.dev/575229df-4f5a-45c9-9326-e1e8810101f0"
     }
   }
 }
