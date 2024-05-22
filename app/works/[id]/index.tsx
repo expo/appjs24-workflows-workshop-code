@@ -1,26 +1,21 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  useWindowDimensions,
-} from "react-native";
-import { Stack, useLocalSearchParams, Link } from "expo-router";
-import { Image } from "expo-image";
-import { FontAwesome as Icon } from "@expo/vector-icons";
-import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
-import { useFavStatusQuery } from "@/data/hooks/useFavStatusQuery";
-import { useFavStatusMutation } from "@/data/hooks/useFavStatusMutation";
+import {Pressable, ScrollView, Text, useWindowDimensions, View,} from "react-native";
+import {Link, Stack, useLocalSearchParams} from "expo-router";
+import {Image} from "expo-image";
+import {FontAwesome as Icon} from "@expo/vector-icons";
+import {useWorkByIdQuery} from "@/data/hooks/useWorkByIdQuery";
+import {useFavStatusQuery} from "@/data/hooks/useFavStatusQuery";
+import {useFavStatusMutation} from "@/data/hooks/useFavStatusMutation";
 import colors from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { LoadingShade } from "@/components/LoadingShade";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {LoadingShade} from "@/components/LoadingShade";
+
 
 export default function DisplayWork() {
   const dimensions = useWindowDimensions();
 
   const insets = useSafeAreaInsets();
 
-  const { id } = useLocalSearchParams<{
+  const {id} = useLocalSearchParams<{
     id: string;
   }>();
 
@@ -43,7 +38,7 @@ export default function DisplayWork() {
         }}
       />
       <ScrollView
-        contentContainerStyle={{ paddingBottom: insets.bottom }}
+        contentContainerStyle={{paddingBottom: insets.bottom}}
         contentContainerClassName="bg-shade-1"
       >
         <View className="py-4 px-4 bg-shade-2">
@@ -51,7 +46,7 @@ export default function DisplayWork() {
             style={{
               height: dimensions.width,
             }}
-            source={{ uri: work && work.images.web.url }}
+            source={{uri: work && work.images.web.url}}
             contentFit="contain"
             transition={500}
           />
@@ -61,12 +56,12 @@ export default function DisplayWork() {
             <Text className="flex-1 font-semibold text-3xl px-4 py-2 bg-shade-2">
               {work?.title}
             </Text>
-            <View className="justify-center px-4 flex-row items-center">
+            <View className="justify-center px-4 flex-row items-center gap-3">
               <Pressable
                 className="active:opacity-50"
                 disabled={favQuery.isLoading || favMutation.isPending}
                 onPress={() => {
-                  favMutation.mutate({ id: id!, status: !isFav });
+                  favMutation.mutate({id: id!, status: !isFav});
                 }}
               >
                 <Icon
@@ -75,6 +70,10 @@ export default function DisplayWork() {
                   size={28}
                 />
               </Pressable>
+
+              <Link push href={`/works/${id}/share`}>
+                <Icon name="share-alt" color={colors.tint} size={28}/>
+              </Link>
             </View>
           </View>
           <View className="px-4 gap-y-2 py-2">
@@ -104,10 +103,11 @@ export default function DisplayWork() {
           )}
         </View>
       </ScrollView>
-      <LoadingShade isLoading={workQuery.isLoading || favQuery.isLoading} />
+      <LoadingShade isLoading={workQuery.isLoading || favQuery.isLoading}/>
     </View>
   );
 }
+
 
 function stripTags(htmlish: string) {
   return htmlish.replace(/<[^>]*>?/gm, "");
