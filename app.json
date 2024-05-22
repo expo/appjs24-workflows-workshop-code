@@ -33,13 +33,26 @@
     "plugins": [
       [
         "expo-router"
-      ]
+      ],
+      "react-native-image-marker"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cb80297e-7414-4ea3-b865-9479b488901c"
+      }
+    },
+    "owner": "lzamboni",
+    "updates": {
+      "url": "https://u.expo.dev/cb80297e-7414-4ea3-b865-9479b488901c"
     }
   }
 }
