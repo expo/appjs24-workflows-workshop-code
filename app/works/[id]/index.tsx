@@ -1,19 +1,19 @@
+import { LoadingShade } from '@/components/LoadingShade';
+import colors from '@/constants/colors';
+import { useFavStatusMutation } from '@/data/hooks/useFavStatusMutation';
+import { useFavStatusQuery } from '@/data/hooks/useFavStatusQuery';
+import { useWorkByIdQuery } from '@/data/hooks/useWorkByIdQuery';
+import { FontAwesome as Icon } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { Link, Stack, useLocalSearchParams } from 'expo-router';
 import {
-  View,
-  Text,
-  ScrollView,
   Pressable,
+  ScrollView,
+  Text,
+  View,
   useWindowDimensions,
-} from "react-native";
-import { Stack, useLocalSearchParams, Link } from "expo-router";
-import { Image } from "expo-image";
-import { FontAwesome as Icon } from "@expo/vector-icons";
-import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
-import { useFavStatusQuery } from "@/data/hooks/useFavStatusQuery";
-import { useFavStatusMutation } from "@/data/hooks/useFavStatusMutation";
-import colors from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { LoadingShade } from "@/components/LoadingShade";
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function DisplayWork() {
   const dimensions = useWindowDimensions();
@@ -39,7 +39,7 @@ export default function DisplayWork() {
     <View className="flex-1 bg-shade-1">
       <Stack.Screen
         options={{
-          title: work?.title || "Loading...",
+          title: work?.title || 'Loading...',
         }}
       />
       <ScrollView
@@ -61,7 +61,7 @@ export default function DisplayWork() {
             <Text className="flex-1 font-semibold text-3xl px-4 py-2 bg-shade-2">
               {work?.title}
             </Text>
-            <View className="justify-center px-4 flex-row items-center">
+            <View className="justify-center px-4 flex-row items-center gap-3">
               <Pressable
                 className="active:opacity-50"
                 disabled={favQuery.isLoading || favMutation.isPending}
@@ -70,11 +70,14 @@ export default function DisplayWork() {
                 }}
               >
                 <Icon
-                  name={isFav ? "star" : "star-o"}
+                  name={isFav ? 'star' : 'star-o'}
                   color={colors.tint}
                   size={28}
                 />
               </Pressable>
+              <Link push href={`/works/${id}/share`}>
+                <Icon name="share-alt" color={colors.tint} size={28} />
+              </Link>
             </View>
           </View>
           <View className="px-4 gap-y-2 py-2">
@@ -86,7 +89,9 @@ export default function DisplayWork() {
           </View>
           {work?.description && (
             <>
-              <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">Description</Text>
+              <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">
+                Description
+              </Text>
               <View className="px-4 gap-y-2 py-2">
                 <Text className="text-l">{stripTags(work.description)}</Text>
               </View>
@@ -110,5 +115,5 @@ export default function DisplayWork() {
 }
 
 function stripTags(htmlish: string) {
-  return htmlish.replace(/<[^>]*>?/gm, "");
+  return htmlish.replace(/<[^>]*>?/gm, '');
 }
