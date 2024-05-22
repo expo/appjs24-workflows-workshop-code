@@ -41,6 +41,18 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d5a86abd-2257-4298-9c32-2d95c70b96a2"
+      }
+    },
+    "owner": "cmalescov",
+    "updates": {
+      "url": "https://u.expo.dev/d5a86abd-2257-4298-9c32-2d95c70b96a2"
     }
   }
 }
