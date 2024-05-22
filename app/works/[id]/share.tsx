@@ -4,6 +4,8 @@ import {Image} from "expo-image";
 import {useWorkByIdQuery} from "@/data/hooks/useWorkByIdQuery";
 import {LoadingShade} from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
+import ImagePicker from "react-native-image-crop-picker";
+
 
 export default function ShareWork() {
   const dimensions = useWindowDimensions();
@@ -41,6 +43,7 @@ export default function ShareWork() {
             share();
           }}
         />
+        <RoundButton onPress={crop} title="Crop"/>
       </View>
       <LoadingShade isLoading={isLoading}/>
     </View>
@@ -48,6 +51,15 @@ export default function ShareWork() {
 
   async function share() {
     await Sharing.shareAsync(work.images.web.url);
+  }
+
+  async function crop() {
+    const image = await ImagePicker.openCropper({
+      path: work.images.web.url,
+      width: 300,
+      height: 300,
+      mediaType: "photo",
+    });
   }
 }
 
