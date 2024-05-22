@@ -33,7 +33,8 @@
     "plugins": [
       [
         "expo-router"
-      ]
+      ],
+      "react-native-image-marker"
     ],
     "experiments": {
       "typedRoutes": true
