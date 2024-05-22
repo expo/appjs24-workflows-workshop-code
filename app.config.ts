@@ -1,9 +1,11 @@
 import "ts-node/register";
 import { ExpoConfig } from "expo/config";
 
+const IS_DEV = process.env.APP_VARIANT === "development";
+
 module.exports = ({ config }: { config: ExpoConfig }) => {
   return {
-    name: "Art Museum",
+    name: IS_DEV ? "Art Museum (dev)" : "Art Museum",
     slug: "appjs24-workflows-workshop-code",
     version: "1.0.0",
     orientation: "portrait",
@@ -18,14 +20,14 @@ module.exports = ({ config }: { config: ExpoConfig }) => {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code",
+      bundleIdentifier: "com.expo.appjs24-workflows-workshop-code" + (IS_DEV ? "-dev" : ""),
     },
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
-      package: "com.expo.appjs24workflowsworkshopcode",
+      package: "com.expo.appjs24workflowsworkshopcode" + (IS_DEV ? "dev" : ""),
     },
     web: {
       bundler: "metro",
