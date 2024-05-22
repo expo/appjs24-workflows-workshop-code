@@ -41,6 +41,18 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e97c094e-1af9-4c51-8dc6-3b982531bb81"
+      }
+    },
+    "owner": "cgavrilete",
+    "updates": {
+      "url": "https://u.expo.dev/e97c094e-1af9-4c51-8dc6-3b982531bb81"
     }
   }
 }
