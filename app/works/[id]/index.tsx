@@ -15,6 +15,7 @@ import colors from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LoadingShade } from "@/components/LoadingShade";
 import * as Sharing from "expo-sharing";
+import ImagePicker from "react-native-image-crop-picker";
 
 export default function DisplayWork() {
   const dimensions = useWindowDimensions();

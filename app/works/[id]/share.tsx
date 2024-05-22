@@ -1,13 +1,42 @@
-import { View, Text, useWindowDimensions, Pressable } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { Image } from "expo-image";
-import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
-import { LoadingShade } from "@/components/LoadingShade";
+import {View, Text, useWindowDimensions, Pressable, Platform} from "react-native";
+import {Stack, useLocalSearchParams} from "expo-router";
+import {Image} from "expo-image";
+import {useWorkByIdQuery} from "@/data/hooks/useWorkByIdQuery";
+import {LoadingShade} from "@/components/LoadingShade";
+import ImagePicker from "react-native-image-crop-picker";
+import {useState} from "react";
+import * as Sharing from "expo-sharing";
 
 export default function ShareWork() {
     const dimensions = useWindowDimensions();
-    const { id } = useLocalSearchParams<{ id: string }>();
-    const { data: work, isLoading } = useWorkByIdQuery(id!);
+    const {id} = useLocalSearchParams<{ id: string }>();
+    const {data: work, isLoading} = useWorkByIdQuery(id!);
+
+    function normalizeFilePath(path: string) {
+        if (Platform.OS === "android" && !path.startsWith("file://")) {
+            return `file://${path}`;
+        }
+        return path;
+    }
+
+    const [editedImagePath, setEditedImagePath] = useState<string | undefined>(
+        undefined
+    );
+
+    async function crop() {
+        const image = await ImagePicker.openCropper({
+            path: work.images.web.url,
+            width: 300,
+            height: 300,
+            mediaType: "photo",
+        });
+        setEditedImagePath(normalizeFilePath(image.path));
+    }
+
+    async function share() {
+        editedImagePath && await Sharing.shareAsync(editedImagePath);
+    }
+
 
     return (
         <View className="flex-1 bg-shade-1">
@@ -28,20 +57,20 @@ export default function ShareWork() {
                     }}
                 >
                     <Image
-                        source={{ uri: work && work.images.web.url }}
-                        style={{ width: "100%", height: "100%" }}
+                        source={{ uri: editedImagePath ? editedImagePath : (work && work.images.web.url) }}
+                        style={{width: "100%", height: "100%"}}
                         contentFit="cover"
                         transition={500}
                     />
                 </View>
+                <RoundButton onPress={crop} title="Crop"/>
                 <RoundButton
                     title="Share"
-                    onPress={() => {
-                        // Share the work
-                    }}
+                    onPress={share}
+                    disabled={!editedImagePath}
                 />
             </View>
-            <LoadingShade isLoading={isLoading} />
+            <LoadingShade isLoading={isLoading}/>
         </View>
     );
 }
