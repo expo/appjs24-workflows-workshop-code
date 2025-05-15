@@ -68,7 +68,7 @@ function RootLayoutNav() {
       <View style={{ flex: 1 }}>
         <Stack
           screenOptions={{
-            headerBackTitleVisible: false,
+            headerTitle: undefined,
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
