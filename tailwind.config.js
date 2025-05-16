@@ -1,8 +1,9 @@
-const colors = require("./constants/colors")
+const colors = require("./constants/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
@@ -13,8 +14,7 @@ module.exports = {
         "shade-1": "#f5f5f5",
         "shade-2": "#CDCDCD",
       },
-    }
+    },
   },
   plugins: [],
-}
-
+};
